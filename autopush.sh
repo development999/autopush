@@ -1,11 +1,22 @@
 #!/bin/bash
 
-message="$1"
-if [ -z $message ]; then
-    echo " $0 <commit-message> "
-    exit 1
+# Get commit message (default: "update")
+msg="$1"
+if [ -z "$msg" ]; then
+    msg="update"
 fi
 
+echo "⚠️  Commit message: $msg"
+
+# Get current branch name
+branch=$(git rev-parse --abbrev-ref HEAD)
+echo "Current branch: $branch"
+
+# Add changes
 git add .
-git commit -m "$message"
-git push -u origin "$(git brach --show-current)"
+
+# Commit
+git commit -m "$msg"
+
+# Push
+git push origin "$branch"
